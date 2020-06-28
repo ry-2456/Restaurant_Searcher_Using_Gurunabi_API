@@ -1,4 +1,7 @@
 import socket
+from flask import Flask, render_template, url_for, request
+
+app = Flask(__name__)
 
 def get_local_ipaddr():
     try:
@@ -12,6 +15,11 @@ def get_local_ipaddr():
         s.close()
     return ipaddr
 
+@app.route("/")
+def home():
+    return "home"
 
 if __name__ == "__main__":
+    app.run(debug=True, host=get_local_ipaddr(), port=5000, threaded=True,
+           ssl_context=("openssl/server.crt", "openssl/server.key")) 
     print(get_local_ipaddr())
