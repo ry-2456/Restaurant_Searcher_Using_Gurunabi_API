@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Filtering</title>
+</head>
+
+<body>
+  <!-- 検索半径を指定 デフォルトでは500m -->
+  {% if search_radius %}
+    <p>検索半径は{{ search_radius }}mです</p>
+  {% endif %}
+  <form method="POST" action="">
+    <label for="rad300">300m</label>
+    <input type="radio" name="search_radius" value="300" id="rad300">
+    <!-- デフォルトの値 -->
+    <label for="rad500">500m</label>
+    <input type="radio" name="search_radius" value="500" id="rad500" checked>
+    <label for="rad1000">1000m</label>
+    <input type="radio" name="search_radius" value="1000" id="rad1000">
+    <label for="rad2000">2000m</label>
+    <input type="radio" name="search_radius" value="2000" id="rad2000">
+    <label for="rad3000">3000m</label>
+    <input type="radio" name="search_radius" value="3000" id="rad3000">
+    <!-- 送信ボタン -->
+    <input type="submit" value="送信する">
+  </form>
+</body>
+</html>

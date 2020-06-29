@@ -1,7 +1,6 @@
 import requests
 import socket
 from flask import Flask, render_template, url_for, request
-
 app = Flask(__name__)
 
 def get_local_ipaddr():
@@ -22,17 +21,17 @@ def get_local_ipaddr():
 def home():
     return "home"
 
-@app.route("/gnavi")
+@app.route("/gnavi", methods=["POST", "GET"])
 def gnavi():
     api_url = "https://api.gnavi.co.jp/RestSearchAPI/v3"
 
     # Read gnavi API key
     with open("gnavi_apikey.txt") as f:
-        apikey = f.read().strip()
+        api_key = f.read().strip()
 
     # Set parameters
     params = {}
-    params["keyid"] = apikey
+    params["keyid"] = api_key
     params["freeword"] = "居酒屋"
     params["hit_per_page"] = 100
 
@@ -40,25 +39,15 @@ def gnavi():
     res = requests.get(api_url, params)
     res = res.json()
      
+    # Searched num
     cnt = len(res["rest"])
-    for i in range(cnt):
-        print("===============================")
-        print("line: {}".format(res["rest"][i]["access"]["line"]))
-        print("station: {}".format(res["rest"][i]["access"]["station"]))
-        print("station_exit: {}".format(res["rest"][i]["access"]["station_exit"]))
-        print("walk: {}".format(res["rest"][i]["access"]["walk"]))
-        print("note: {}".format(res["rest"][i]["access"]["note"]))
 
-        print(res["rest"][i]["name"])
-        print(res["rest"][i]["address"])
-        print(res["rest"][i]["tel"])
-        print(res["rest"][i]["opentime"])
+    if request.method == "POST":
+        search_radius = request.form["search_radius"]
+        return render_template("filtering.html", search_radius=search_radius)
 
-        print(res["rest"][i]["image_url"]["shop_image1"])
-        print(res["rest"][i]["image_url"]["shop_image2"])
-        print(res["rest"][i]["image_url"]["qrcode"])
-        print("===============================\n")
-    return "gnavi"
+    elif request.method == "GET":
+        return render_template("filtering.html")
 
 if __name__ == "__main__":
     app.run(debug=True, host=get_local_ipaddr(), port=3000, threaded=True,
