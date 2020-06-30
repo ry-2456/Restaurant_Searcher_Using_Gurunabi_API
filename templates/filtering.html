@@ -27,7 +27,7 @@
 
   {% for restaurant in rests %}
     <div style="border: 10px soild black;">
-      <table>
+      <table border="1" style="text-align: center;">
         <tr>
           <th>name</th>
           <th>img_url1</th>
@@ -36,18 +36,27 @@
         <tr>
           <td>{{ restaurant.name }}</td>
 
-          {% if restaurant.img_url1|length > 1 %}
+          {% if restaurant.img_url1 %}
             <td>{{ restaurant.img_url1 }}</td>
           {% else %}
             <td>画像がありません</td>
           {% endif %}
 
-          {% if restaurant.img_url2|length > 1 %}
+          {% if restaurant.img_url2 %}
             <td>{{ restaurant.img_url2 }}</td>
           {% else %}
             <td>画像がありません</td>
           {% endif %}
-
+        </tr>
+        <tr>
+          <th>address</th>
+          <th>tel</th>
+          <th>opening_hours</th>
+        </tr>
+        <tr>
+          <td>{{ restaurant.address }}</td>
+          <td>{{ restaurant.tel }}</td>
+          <td>{{ restaurant.opening_hours }}</td>
         </tr>
       </table>
     </div>

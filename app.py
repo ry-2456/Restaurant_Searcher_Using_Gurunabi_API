@@ -2,7 +2,7 @@ import requests
 import socket
 from flask import Flask, render_template, url_for, request
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Text
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "secret key"
@@ -17,6 +17,10 @@ class Restaurant(db.Model):
     name = db.Column(String)
     img_url1 = db.Column(String)
     img_url2 = db.Column(String)
+    address = db.Column(String)
+    tel = db.Column(String)
+    # opening_hours = db.Column(String)
+    opening_hours = db.Column(Text)
 
     def __repr__(self):
         return "<Restaurant name={} img_url1={} img_url2={}".format(
@@ -84,7 +88,10 @@ def gnavi():
                 Restaurant(
                     name=res["rest"][i]["name"],
                     img_url1 = res["rest"][i]["image_url"]["shop_image1"],
-                    img_url2 = res["rest"][i]["image_url"]["shop_image2"]
+                    img_url2 = res["rest"][i]["image_url"]["shop_image2"],
+                    address = res["rest"][i]["address"],
+                    tel = res["rest"][i]["tel"],
+                    opening_hours = res["rest"][i]["opentime"]
                 )
             )
             db.session.add_all(restaurants)  
@@ -101,4 +108,3 @@ def gnavi():
 if __name__ == "__main__":
     app.run(debug=True, host=get_local_ipaddr(), port=3000, threaded=True,
            ssl_context=("openssl/server.crt", "openssl/server.key")) 
-    db.drop_all()
