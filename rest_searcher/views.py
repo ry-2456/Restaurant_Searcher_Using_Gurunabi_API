@@ -3,11 +3,13 @@ from flask import Flask, render_template, url_for, request
 from rest_searcher import app, db
 from rest_searcher.models import Restaurant
 
-print("unko")
-
 @app.route("/")
 def home():
     return "home"
+
+@app.route("/pos")
+def get_current_position():
+    return render_template("current_pos.html")
 
 @app.route("/gnavi", methods=["POST", "GET"])
 def gnavi():
@@ -40,19 +42,18 @@ def gnavi():
         # Searched num
         cnt = len(res["rest"])
 
-        # Add restaurant info to database
+        # Add restaurant to database
         restaurants = []
         for i in range(cnt):
-            restaurants.append(
-                Restaurant(
-                    name=res["rest"][i]["name"],
-                    img_url1 = res["rest"][i]["image_url"]["shop_image1"],
-                    img_url2 = res["rest"][i]["image_url"]["shop_image2"],
-                    address = res["rest"][i]["address"],
-                    tel = res["rest"][i]["tel"],
-                    opening_hours = res["rest"][i]["opentime"]
-                )
-            )
+            rest = Restaurant(
+                        name=res["rest"][i]["name"],
+                        img_url1 = res["rest"][i]["image_url"]["shop_image1"],
+                        img_url2 = res["rest"][i]["image_url"]["shop_image2"],
+                        address = res["rest"][i]["address"],
+                        tel = res["rest"][i]["tel"],
+                        opening_hours = res["rest"][i]["opentime"]
+                   )
+            restaurants.append(rest)
             db.session.add_all(restaurants)  
             db.session.commit()
 
