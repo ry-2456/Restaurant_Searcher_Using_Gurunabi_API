@@ -1,33 +1,36 @@
 import requests
 import socket
-from flask import Flask, render_template, url_for, request
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Integer, String, Text
+#from flask import Flask, render_template, url_for, request
+from flask import render_template, url_for, request
+# from flask_sqlalchemy import SQLAlchemy
+# from sqlalchemy import Column, Integer, String, Text
+from rest_seacher import app, db
+from rest_seacher.models import Restaurant
 
-app = Flask(__name__)
-app.config["SECRET_KEY"] = "secret key"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///restaurant.db" # path to db
-
-db = SQLAlchemy(app)
-
-class Restaurant(db.Model):
-
-    __tablename__ = "restaurants"
-    id = db.Column(Integer, primary_key=True)
-    name = db.Column(String)
-    img_url1 = db.Column(String)
-    img_url2 = db.Column(String)
-    address = db.Column(String)
-    tel = db.Column(String)
-    # opening_hours = db.Column(String)
-    opening_hours = db.Column(Text)
-
-    def __repr__(self):
-        return "<Restaurant name={} img_url1={} img_url2={}".format(
-            self.name, self.img_url1, self.img_url2)
-
-db.create_all()
-
+# app = Flask(__name__)
+# app.config["SECRET_KEY"] = "secret key"
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///restaurant.db" # path to db
+# 
+# db = SQLAlchemy(app)
+# 
+# class Restaurant(db.Model):
+# 
+#     __tablename__ = "restaurants"
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String)
+#     img_url1 = db.Column(db.String)
+#     img_url2 = db.Column(db.String)
+#     address = db.Column(db.String)
+#     tel = db.Column(db.String)
+#     # opening_hours = db.Column(String)
+#     opening_hours = db.Column(db.Text)
+# 
+#     def __repr__(self):
+#         return "<Restaurant name={} img_url1={} img_url2={}".format(
+#             self.name, self.img_url1, self.img_url2)
+# 
+# db.create_all()
+# 
 def add_restaurat_to_db(restaurant):
     "add restaurant info to database"
     db.session.add(restaurant)
