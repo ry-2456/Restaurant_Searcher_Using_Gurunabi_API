@@ -1,7 +1,9 @@
 // Callback function executed when succeed in getting the current position.
 function successCallback(pos) {
-  let lat = pos.coords.latitude;  // 緯度
-  let lng = pos.coords.longitude; // 経度
+  // let lat = pos.coords.latitude;  // 緯度
+  // let lng = pos.coords.longitude; // 経度
+  lat = pos.coords.latitude;  // 緯度
+  lng = pos.coords.longitude; // 経度
   alert(lat);
   alert(lng);
 
@@ -35,3 +37,12 @@ if (navigator.geolocation) {
   let errorMsg = "あなたの端末では現在位置を取得できません";
   alert(errorMsg);
 }
+
+$.ajax({
+  type: "POST",
+  contentType: "application/json;charset=utf-8",
+  url: "/fromjavascript",
+  // data: JSON.stringify({'myvar': 1}),
+  data: JSON.stringify({'let': let, 'lng': lng}),
+  dataType: "json"
+});

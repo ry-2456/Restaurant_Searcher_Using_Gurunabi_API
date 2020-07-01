@@ -7,6 +7,16 @@ from rest_searcher.models import Restaurant
 def home():
     return "home"
 
+@app.route("/fromjavascript", methods=["POST"])
+def get_latitude_and_longitude():
+    if request.method == "POST":
+        json_obj = request.get_json()
+        print(type(json_obj))
+        print(json_obj)
+
+    return '', 200
+
+
 @app.route("/pos")
 def get_current_position():
     return render_template("current_pos.html")
