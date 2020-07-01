@@ -26,23 +26,45 @@ function errorCallback(error) {
   alert(error.message);
 }
 
+// Option for geolocation API
 let optionObj = {
-  "enableHighAccuracy": false,
+  enableHighAccuracy: true,
+  timeout: 2000,
+  maximuAge: 0
 };
 
 // Get current position.
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(successCallback, errorCallback, optionObj);
-} else {
-  let errorMsg = "あなたの端末では現在位置を取得できません";
-  alert(errorMsg);
+function getCurrentPosition() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(successCallback, errorCallback, optionObj);
+  } else {
+    let errorMsg = "あなたの端末では現在位置を取得できません";
+    alert(errorMsg);
+  }
 }
 
-$.ajax({
-  type: "POST",
-  contentType: "application/json;charset=utf-8",
-  url: "/fromjavascript",
-  // data: JSON.stringify({'myvar': 1}),
-  data: JSON.stringify({'let': let, 'lng': lng}),
-  dataType: "json"
+// pass current position (lat, lng) to Flask
+function passCurrentPositionToFlask(options) {
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(resolve, reject, options);
+})};
+
+
+// pass curent position to Flask
+passCurrentPositionToFlask(optionObj).then((position) => {
+    let lat = position.coords.latitude;  // 緯度
+    let lng = position.coords.longitude; // 経度
+    alert(lat);
+    alert(lng);
+    console.log(lat);
+    console.log(lng);
+    $.ajax({
+      type: "POST",
+      contentType: "application/json;charset=utf-8",
+      url: "/fromjavascript",
+      data: JSON.stringify({'lat': lat, 'lng': lng}),
+      dataType: "json"
+     });
+  }).catch((err) => {
+    console.log(err.message);
 });
