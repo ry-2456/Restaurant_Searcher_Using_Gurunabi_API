@@ -54,8 +54,16 @@ function passCurrentPositionToFlask(options) {
 passCurrentPositionToFlask(optionObj).then((position) => {
     let lat = position.coords.latitude;  // 緯度
     let lng = position.coords.longitude; // 経度
+
+    document.getElementById("geolocation-result").innerHTML = 
+      '<table>' + 
+      '<td>緯度</dt><dd>' + lat + '</dd>' + 
+      '<td>経度</dt><dd>' + lng + '</dd>' + 
+      '</table>';
+
     alert(lat);
     alert(lng);
+
     console.log(lat);
     console.log(lng);
     $.ajax({

@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+{% block body %}
+  <div>
+    <a href="{{ url_for('test1', username=3) }}"> click me to go test1</a>
+  </div>
+  <div>
+    <a href="{{ url_for('test2', username='rintarou') }}"> click me to go test2</a>
+  </div>
+  <div>
+    {% for restaurant in rests.items %}
+      <div style="border: 10px soild black;">
+        <table border="1" style="text-align: center;">
+          <tr>
+            <th>name</th>
+            <th>img_url1</th>
+            <th>img_url2</th>
+          </tr>
+          <tr>
+            <td>{{ restaurant.name }}</td>
+
+            {% if restaurant.img_url1 %}
+              <td><img src="{{ restaurant.img_url1 }}" /></td>
+            {% else %}
+              <td>画像がありません</td>
+            {% endif %}
+
+            {% if restaurant.img_url2 %}
+              <td><img src="{{ restaurant.img_url2 }}" /></td>
+            {% else %}
+              <td>画像がありません</td>
+            {% endif %}
+          </tr>
+          <tr>
+            <th>address</th>
+            <th>tel</th>
+            <th>opening_hours</th>
+          </tr>
+          <tr>
+            <td>{{ restaurant.address }}</td>
+            <td>{{ restaurant.tel }}</td>
+            <td>{{ restaurant.opening_hours }}</td>
+          </tr>
+        </table>
+      </div>
+    {% endfor %}
+  </div>
+  
+  <div>
+    {{ rests.info }}
+  </div>
+
+  <!-- 次ページヘのリンク -->
+  {% if rests.prev_num %}
+    <a href="{{ url_for('page', page=rests.prev_num) }}" style="color:green;">prev</a>
+  {% endif %}
+
+  <!-- 各ページヘのリンク -->
+  {% for page_num in rests.iter_pages(left_edge=2, left_current=2, right_current=3, right_edge=2) %}
+    {% if page_num %}
+      {% if rests.page == page_num %}
+        <a href="{{ url_for('page', page=page_num) }}" style="color:red;">{{ page_num }}</a>
+      {% else %}
+        <a href="{{ url_for('page', page=page_num) }}" style="color:green;">{{ page_num }} </a>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+  <!-- 前ページヘのリンク -->
+  {% if rests.next_num %}
+    <a href="{{ url_for('page', page=rests.next_num) }}" style="color:green;">next</a>
+  {% endif %}
+
+{% endblock %}

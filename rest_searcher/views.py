@@ -9,6 +9,26 @@ from rest_searcher.models import Restaurant
 def home():
     return "home"
 
+@app.route("/test1/<string:username>")
+def test1(username):
+    print(type(username))
+    return username
+
+@app.route("/test2/<username>")
+def test2(username):
+    return username
+
+@app.route("/page")
+def page():
+    page = request.args.get('page', default=1, type=int)
+    rests = db.session.query(Restaurant).order_by(
+        Restaurant.id.asc()).paginate(page=page, per_page=3)
+    for rest in rests.items:
+        print(rest)
+    print(len(rests.items))
+
+    return render_template("page.html", rests=rests ,title="page")
+
 @app.route("/fromjavascript", methods=["POST"])
 def get_latitude_and_longitude():
     if request.method == "POST":
@@ -18,17 +38,12 @@ def get_latitude_and_longitude():
         lng =  current_position["lng"]
         session["lat"] = lat
         session["lng"] = lng
-        session["lat"] = 35.6865269
-        session["lng"] = 139.7016647
-        print("#######################")
-        print(lat, lng)
-        print("#######################")
         # print(url_for("gnavi")) # /gnavi
     return redirect(url_for("gnavi"))
 
 @app.route("/pos")
 def get_current_position():
-    return render_template("current_pos.html")
+    return render_template("current_pos.html", title="pos")
 
 
 @app.route("/gnavi", methods=["POST", "GET"])
@@ -36,17 +51,22 @@ def gnavi():
     api_url = "https://api.gnavi.co.jp/RestSearchAPI/v3"
 
     # delete all rows in Restaurant
-    num_rows_deleted = db.session.query(Restaurant).delete()
-    db.session.commit()
-    print("num rows deleted : {}".format(num_rows_deleted))
+    # num_rows_deleted = db.session.query(Restaurant).delete()
+    # db.session.commit()
+    # print("num rows deleted : {}".format(num_rows_deleted))
 
     if request.method == "GET":
-        return render_template("filtering.html")
+        return render_template("filtering.html", title="gnavi")
 
     elif request.method == "POST":
         # Read gnavi API key
         with open("gnavi_apikey.txt") as f:
             api_key = f.read().strip()
+
+        # delete all rows in Restaurant
+        num_rows_deleted = db.session.query(Restaurant).delete()
+        db.session.commit()
+        print("num rows deleted : {}".format(num_rows_deleted))
 
         # Set parameters
         params = {}
@@ -93,6 +113,9 @@ def gnavi():
         all_restaurant_info = db.session.query(Restaurant).all()
 
         search_radius = request.form["search_radius"]
+        print("################")
+        print(search_radius)
+        print("################")
 
         return render_template("filtering.html", 
-            search_radius=search_radius, rests=all_restaurant_info)
+            search_radius=search_radius, rests=all_restaurant_info, title="gnavi")
