@@ -40,6 +40,9 @@
             <td>{{ restaurant.tel }}</td>
             <td>{{ restaurant.opening_hours }}</td>
           </tr>
+          <tr>
+            <td><a href="{{ url_for('gnavi_detail', id=restaurant.id) }}" target="_blank">詳細</a>
+          </tr>
         </table>
       </div>
     {% endfor %}
@@ -58,10 +61,16 @@
   {% for page_num in rests.iter_pages(left_edge=2, left_current=2, right_current=3, right_edge=2) %}
     {% if page_num %}
       {% if rests.page == page_num %}
-        <a href="{{ url_for('page', page=page_num) }}" style="color:red;">{{ page_num }}</a>
+        <a href="{{ url_for('page', page=page_num) }}" style="color:red;">
+          <div style="display:table-cell;"> {{ page_num }} </div>
+        </a>
       {% else %}
-        <a href="{{ url_for('page', page=page_num) }}" style="color:green;">{{ page_num }} </a>
+        <a href="{{ url_for('page', page=page_num) }}" style="color:green;">
+          <div style="display:table-cell;"> {{ page_num }} </div>
+        </a>
       {% endif %}
+    {% else %}
+      <div style="display:inline-block;">...</div>
     {% endif %}
   {% endfor %}
 

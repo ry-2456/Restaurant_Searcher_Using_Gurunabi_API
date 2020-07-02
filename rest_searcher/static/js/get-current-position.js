@@ -69,7 +69,7 @@ passCurrentPositionToFlask(optionObj).then((position) => {
     $.ajax({
       type: "POST",
       contentType: "application/json;charset=utf-8",
-      url: "/fromjavascript",
+      url: "/receive_position",
       data: JSON.stringify({'lat': lat, 'lng': lng}),
       dataType: "json"
      });

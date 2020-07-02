@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h1>{{ rest.name }}(詳細画面)</h1>
+  <div style="border: 10px soild black;">
+    <table border="1" style="text-align: center;">
+      <tr>
+        <th>name</th>
+        <th>img_url1</th>
+        <th>img_url2</th>
+      </tr>
+      <tr>
+        <td>{{ rest.name }}</td>
+
+        {% if rest.img_url1 %}
+          <td><img src="{{ rest.img_url1 }}" /></td>
+        {% else %}
+          <td>画像がありません</td>
+        {% endif %}
+
+        {% if rest.img_url2 %}
+          <td><img src="{{ rest.img_url2 }}" /></td>
+        {% else %}
+          <td>画像がありません</td>
+        {% endif %}
+      </tr>
+      <tr>
+        <th>address</th>
+        <th>tel</th>
+        <th>opening_hours</th>
+      </tr>
+      <tr>
+        <td>{{ rest.address }}</td>
+        <td>{{ rest.tel }}</td>
+        <td>{{ rest.opening_hours }}</td>
+      </tr>
+    </table>
+  </div>
+{% endblock %}
+

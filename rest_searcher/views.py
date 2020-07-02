@@ -29,7 +29,7 @@ def page():
 
     return render_template("page.html", rests=rests ,title="page")
 
-@app.route("/fromjavascript", methods=["POST"])
+@app.route("/receive_position", methods=["POST"])
 def get_latitude_and_longitude():
     if request.method == "POST":
         # receive lat and lng from javascript
@@ -45,6 +45,11 @@ def get_latitude_and_longitude():
 def get_current_position():
     return render_template("current_pos.html", title="pos")
 
+@app.route("/gnavi/<id>", methods=["POST", "GET"])
+def gnavi_detail(id):
+    rest = db.session.query(Restaurant).filter(Restaurant.id == id).first()
+    return render_template("detailed_page.html", rest=rest)
+    
 
 @app.route("/gnavi", methods=["POST", "GET"])
 def gnavi():
@@ -71,12 +76,14 @@ def gnavi():
         # Set parameters
         params = {}
         params["keyid"] = api_key
-        # params["freeword"] = "居酒屋"
+        params["freeword"] = "居酒屋"
         params["hit_per_page"] = 100
 
-        # if session.get("lat") is not None and session.get("lng") is not None:
-        #     params["latitude"] = round(session["lat"], 6)
-        #     params["longitude"] = round(session["lat"], 6)
+        if session.get("lat") is not None and session.get("lng") is not None:
+            params["latitude"] = round(session["lat"], 6)
+            params["longitude"] = round(session["lat"], 6)
+            search_radius_idx = request.form["search_radius_idx"]
+            params["range"] = int(search_radius_idx)
 
         # Request result
         res = requests.get(api_url, params)
@@ -92,7 +99,7 @@ def gnavi():
         # Searched num
         cnt = len(res["rest"])
 
-        # Add restaurant to database
+        # Add restaurants to database
         restaurants = []
         for i in range(cnt):
             rest = Restaurant(
@@ -109,13 +116,14 @@ def gnavi():
         db.session.add_all(restaurants)  
         db.session.commit()
 
-        # get all rows
+        # get target="_blank" all rows
         all_restaurant_info = db.session.query(Restaurant).all()
 
-        search_radius = request.form["search_radius"]
-        print("################")
-        print(search_radius)
-        print("################")
+        # receive search radius idx 
+        search_radius_idx = request.form["search_radius_idx"]
 
-        return render_template("filtering.html", 
-            search_radius=search_radius, rests=all_restaurant_info, title="gnavi")
+        search_radius = {"1":300, "2":500, "3":1000, "4":2000, "5":3000}[search_radius_idx]
+
+        return redirect(url_for('page'))
+        # return render_template("filtering.html", 
+        #     search_radius=search_radius, rests=all_restaurant_info, title="gnavi")
