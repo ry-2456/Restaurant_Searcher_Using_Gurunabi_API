@@ -6,16 +6,17 @@
   {% endif %}
   <form method="POST" action="">
     <label for="rad300">300m</label>
-    <input type="radio" name="search_radius" value="300" id="rad300">
+    <input type="radio" name="search_radius_idx" value="1" id="rad300">
     <!-- デフォルトの値 -->
     <label for="rad500">500m</label>
-    <input type="radio" name="search_radius" value="500" id="rad500" checked>
+    <input type="radio" name="search_radius_idx" value="2" id="rad500" checked>
     <label for="rad1000">1000m</label>
-    <input type="radio" name="search_radius" value="1000" id="rad1000">
+    <input type="radio" name="search_radius_idx" value="3" id="rad1000">
     <label for="rad2000">2000m</label>
-    <input type="radio" name="search_radius" value="2000" id="rad2000">
-    <label for="rad3000">3000m</label>
-    <input type="radio" name="search_radius" value="3000" id="rad3000">
+    <input type="radio" name="search_radius_idx" value="4" id="rad2000"> 
+    <label for="rad3000">3000m</label> 
+    <input type="radio" name="search_radius_idx" value="5" id="rad3000">
+
     <!-- 送信ボタン -->
     <input type="submit" value="送信する">
   </form>
@@ -52,6 +53,9 @@
           <td>{{ restaurant.address }}</td>
           <td>{{ restaurant.tel }}</td>
           <td>{{ restaurant.opening_hours }}</td>
+        </tr>
+        <tr>
+          <td><a href="{{ url_for('gnavi_detail', id=restaurant.id) }}" target="_blank">詳細</a>
         </tr>
       </table>
     </div>
