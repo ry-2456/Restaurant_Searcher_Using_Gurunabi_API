@@ -1,0 +1,44 @@
+.pagenation {
+  text-align: center;
+  /*border: 1px solid black;*/
+}
+
+.pagenation ul {
+  display: inline-block;
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  overflow: hidden; /*floatしてるliがulからはみ出ないように*/
+}
+
+.pagenation li {
+  float:left;
+  margin: 0;
+}
+
+.pagenation .page-btn, .pagenation span {
+  box-sizing: border-box;
+  display: block;
+  text-decoration: none;
+  line-height: 40px;
+  color: #666;
+  width: 50px;
+  background-color: #ffffff;
+}
+.pagenation .page-btn:hover {
+  color: #ff6600;
+}
+
+.pagenation .page-btn {
+  color: #666;
+  border: 1px solid #e6e6e6;
+  border-radius: 2px;
+}
+
+.pagenation span {
+  color: black;
+}
+
+.pagenation .current-page {
+  border-bottom: 2px solid #ff6600;
+}
