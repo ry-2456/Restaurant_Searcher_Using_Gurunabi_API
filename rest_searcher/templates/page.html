@@ -1,11 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
+  {#
   <div>
     <a href="{{ url_for('test1', username=3) }}"> click me to go test1</a>
   </div>
   <div>
     <a href="{{ url_for('test2', username='rintarou') }}"> click me to go test2</a>
   </div>
+  #}
   <div>
     {% for restaurant in rests.items %}
       <div style="border: 10px soild black;">
@@ -47,36 +49,44 @@
       </div>
     {% endfor %}
   </div>
-  
-  <div>
-    {{ rests.info }}
-  </div>
-
-  <!-- 次ページヘのリンク -->
-  {% if rests.prev_num %}
-    <a href="{{ url_for('page', page=rests.prev_num) }}" style="color:green;">prev</a>
-  {% endif %}
-
-  <!-- 各ページヘのリンク -->
-  {% for page_num in rests.iter_pages(left_edge=2, left_current=2, right_current=3, right_edge=2) %}
-    {% if page_num %}
-      {% if rests.page == page_num %}
-        <a href="{{ url_for('page', page=page_num) }}" style="color:red;">
-          <div style="display:table-cell;"> {{ page_num }} </div>
-        </a>
-      {% else %}
-        <a href="{{ url_for('page', page=page_num) }}" style="color:green;">
-          <div style="display:table-cell;"> {{ page_num }} </div>
-        </a>
+  <div style="width: 300px; height:300px; background-color:black; margin:0 auto;"></div>
+  <div class="pagenation">
+    <ul class="page-numbers">
+      <!-- 次ページヘのリンク -->
+      {% if rests.prev_num %}
+        <li>
+          <a href="{{ url_for('page', page=rests.prev_num) }}" class="prev-page page-btn"> < </a>
+        </li>
       {% endif %}
-    {% else %}
-      <div style="display:inline-block;">...</div>
-    {% endif %}
-  {% endfor %}
 
-  <!-- 前ページヘのリンク -->
-  {% if rests.next_num %}
-    <a href="{{ url_for('page', page=rests.next_num) }}" style="color:green;">next</a>
-  {% endif %}
+      <!-- 各ページヘのリンク -->
+      {% for page_num in rests.iter_pages(left_edge=2, left_current=2, right_current=3, right_edge=2) %}
+        {% if page_num %}
+          {% if rests.page == page_num %}
+            <!-- 現在のページ -->
+            <li>
+              <a href="{{ url_for('page', page=page_num) }}" class="current-page page-btn"> {{ page_num }} </a>
+            </li>
+          {% else %}
+            <!-- 現在以外のページ -->
+            <li>
+              <a href="{{ url_for('page', page=page_num) }}" class="page-btn"> {{ page_num }} </a>
+            </li>
+          {% endif %}
+        {% else %}
+          <li>
+            <span>...</span>
+          </li>
+        {% endif %}
+      {% endfor %}
+
+      <!-- 前ページヘのリンク -->
+      {% if rests.next_num %}
+        <li>
+          <a href="{{ url_for('page', page=rests.next_num) }}" class="next-page page-btn"> > </a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
 
 {% endblock %}
