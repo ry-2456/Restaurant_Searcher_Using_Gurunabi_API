@@ -5,9 +5,9 @@ from flask import request, redirect, session
 from rest_searcher import app, db
 from rest_searcher.models import Restaurant
 
-@app.route("/")
-def home():
-    return "home"
+# @app.route("/")
+# def home():
+#     return "home"
 
 @app.route("/test1/<string:username>")
 def test1(username):
@@ -50,7 +50,6 @@ def gnavi_detail(id):
     rest = db.session.query(Restaurant).filter(Restaurant.id == id).first()
     return render_template("detailed_page.html", rest=rest)
     
-
 @app.route("/gnavi", methods=["POST", "GET"])
 def gnavi():
     api_url = "https://api.gnavi.co.jp/RestSearchAPI/v3"
@@ -79,11 +78,11 @@ def gnavi():
         params["freeword"] = "居酒屋"
         params["hit_per_page"] = 100
 
-        if session.get("lat") is not None and session.get("lng") is not None:
-            params["latitude"] = round(session["lat"], 6)
-            params["longitude"] = round(session["lat"], 6)
-            search_radius_idx = request.form["search_radius_idx"]
-            params["range"] = int(search_radius_idx)
+        # if session.get("lat") is not None and session.get("lng") is not None:
+        #     params["latitude"] = round(session["lat"], 6)
+        #     params["longitude"] = round(session["lat"], 6)
+        #     search_radius_idx = request.form["search_radius_idx"]
+        #     params["range"] = int(search_radius_idx)
 
         # Request result
         res = requests.get(api_url, params)

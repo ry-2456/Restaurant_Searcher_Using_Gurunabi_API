@@ -1,0 +1,45 @@
+header {
+  width: 100%;
+  height: 70px; 
+  background-color: #ff6600;
+}
+
+header .headline {
+  line-height: 70px;  /*行の高さ*/
+  float: left; 
+  font-size: 25px;
+  margin: 0 20px;
+  /*background-color: red;*/
+}
+
+.nav-list {
+  float: right;
+  list-style: none;
+  margin: 0 100px;
+  padding: 0;
+  /*background-color: blue;*/
+}
+
+.nav-list-item {
+  line-height: 70px;
+  text-align: center;   
+  display: block; /*listはdefaultではdisplay:block;*/
+  float: left;
+  height: 70px;
+  width: 120px;
+  margin:0;
+  padding:0;
+  /*background-color: green;*/
+}
+
+
+/*クリックできる範囲を広くする*/
+header a {
+  color: #ddd;
+  text-decoration: none;
+  display: block;
+}
+
+header a:hover {
+  color: white;
+}
