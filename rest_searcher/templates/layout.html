@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/pagenation.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main_content.css') }}">
     <!-- jQueryの読み込み -->
     <script src="{{ url_for('static', filename='js/jquery-3.5.1.min.js') }}"></script>
     <!-- 現在位置を取得するjsの読み込み -->
@@ -30,7 +31,7 @@
   </header>
 
 
-  <main style="width:100%; height:2000px; background-color:#ffffff; clear:both;">
+  <main style="width:100%; background-color:#ffffff; clear:both;">
     {% block content %}
     {% endblock %} 
   </main>

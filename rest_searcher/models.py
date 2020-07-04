@@ -10,6 +10,7 @@ class Restaurant(db.Model):
     address = db.Column(db.String)
     tel = db.Column(db.String)
     # opening_hours = db.Column(String)
+    budget = db.Column(db.Integer) # 平均予算
     opening_hours = db.Column(db.Text)
 
     def __repr__(self):

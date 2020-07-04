@@ -22,7 +22,7 @@ def test2(username):
 def page():
     page = request.args.get('page', default=1, type=int)
     rests = db.session.query(Restaurant).order_by(
-        Restaurant.id.asc()).paginate(page=page, per_page=3)
+        Restaurant.id.asc()).paginate(page=page, per_page=20)
     for rest in rests.items:
         print(rest)
     print(len(rests.items))
@@ -50,6 +50,7 @@ def gnavi_detail(id):
     rest = db.session.query(Restaurant).filter(Restaurant.id == id).first()
     return render_template("detailed_page.html", rest=rest)
     
+@app.route("/", methods=["POST", "GET"])
 @app.route("/gnavi", methods=["POST", "GET"])
 def gnavi():
     api_url = "https://api.gnavi.co.jp/RestSearchAPI/v3"
@@ -107,8 +108,14 @@ def gnavi():
                         img_url2 = res["rest"][i]["image_url"]["shop_image2"],
                         address = res["rest"][i]["address"],
                         tel = res["rest"][i]["tel"],
-                        opening_hours = res["rest"][i]["opentime"]
+                        opening_hours = res["rest"][i]["opentime"],
+                        budget = res["rest"][i]["budget"]
                    )
+            print("######################")
+            print(res["rest"][i]["pr"]["pr_short"])
+            print(res["rest"][i]["pr"]["pr_long"])
+            print("######################")
+
             restaurants.append(rest)
 
         # add_restaurat_to_db(restaurant)

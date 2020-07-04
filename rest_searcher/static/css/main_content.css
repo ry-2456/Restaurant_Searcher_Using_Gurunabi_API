@@ -1,0 +1,21 @@
+.rest-item {
+  border: solid 1px black;
+  width: 700px;
+  margin: 10px auto;
+}
+
+
+.rest-info-container ul.rest-info {
+  list-style: none;
+  line-height: 15px;
+}
+.rest-info-elem {
+  border: 1px solid black;
+}
+
+.rest-info img{
+  width: 15px;
+  height: 15px;  
+  vertical-align: middle; 
+}
+

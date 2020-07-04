@@ -49,14 +49,35 @@
       </div>
     {% endfor %}
   </div>
-  <div style="width: 300px; height:300px; background-color:black; margin:0 auto;"></div>
+
+  <!-- レストラン一覧 -->
+  <div class="main-content">
+    {% for rest in rests.items %}
+      <div class="rest-item">
+        <div class="rest-img" style="border: solid 1px red;">
+          {% if rest.img_url1 %}
+            <img src="{{ rest.img_url1 }}" />
+          {% elif rest.img_url2 %}
+            <img src="{{ rest.img_url2 }}" />
+          {% endif %}
+        </div>
+        <div class="rest-info-container">
+          <a href="{{ url_for('gnavi_detail', id=rest.id) }}" target="_blank">{{ rest.name }}</a>
+          <ul class="rest-info">
+            <li class="rest-access rest-info-elem"><img src="{{ url_for('static', filename='img/train.svg') }}" />守口市駅徒歩3分</li>
+            <li class="rest-openinghours rest-info-elem"><img src="{{ url_for('static', filename='img/clock.svg') }}" /><p>{{ rest.opening_hours }}</p></li>
+            <li class="rest-budget rest-info-elem"><img src="{{ url_for('static', filename='img/money.svg') }}" />平均予算{{ rest.budget }}円</li>
+          </ul>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
   <div class="pagenation">
     <ul class="page-numbers">
       <!-- 次ページヘのリンク -->
       {% if rests.prev_num %}
-        <li>
-          <a href="{{ url_for('page', page=rests.prev_num) }}" class="prev-page page-btn"> < </a>
-        </li>
+        <li><a href="{{ url_for('page', page=rests.prev_num) }}" class="prev-page page-btn"> < </a></li>
       {% endif %}
 
       <!-- 各ページヘのリンク -->
@@ -64,27 +85,19 @@
         {% if page_num %}
           {% if rests.page == page_num %}
             <!-- 現在のページ -->
-            <li>
-              <a href="{{ url_for('page', page=page_num) }}" class="current-page page-btn"> {{ page_num }} </a>
-            </li>
+            <li><a href="{{ url_for('page', page=page_num) }}" class="current-page page-btn"> {{ page_num }} </a></li>
           {% else %}
             <!-- 現在以外のページ -->
-            <li>
-              <a href="{{ url_for('page', page=page_num) }}" class="page-btn"> {{ page_num }} </a>
-            </li>
+            <li><a href="{{ url_for('page', page=page_num) }}" class="page-btn"> {{ page_num }}</a></li>
           {% endif %}
         {% else %}
-          <li>
-            <span>...</span>
-          </li>
+          <li><span>...</span></li>
         {% endif %}
       {% endfor %}
 
       <!-- 前ページヘのリンク -->
       {% if rests.next_num %}
-        <li>
-          <a href="{{ url_for('page', page=rests.next_num) }}" class="next-page page-btn"> > </a>
-        </li>
+        <li><a href="{{ url_for('page', page=rests.next_num) }}" class="next-page page-btn"> > </a></li>
       {% endif %}
     </ul>
   </div>
