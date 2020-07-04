@@ -8,7 +8,11 @@
   list-style: none;
   margin: 0 auto;
   padding: 0;
+<<<<<<< HEAD
   overflow: hidden; /*floatしてるliがulからはみ出ないように*/
+=======
+  overflow: hidden;
+>>>>>>> origin/master
 }
 
 .pagenation li {
@@ -25,7 +29,11 @@
   width: 50px;
   background-color: #ffffff;
 }
+<<<<<<< HEAD
 .pagenation .page-btn:hover {
+=======
+.pagenation .page-btn:hover, .pagenation span:hover {
+>>>>>>> origin/master
   color: #ff6600;
 }
 
