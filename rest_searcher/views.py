@@ -23,9 +23,9 @@ def page():
     page = request.args.get('page', default=1, type=int)
     rests = db.session.query(Restaurant).order_by(
         Restaurant.id.asc()).paginate(page=page, per_page=20)
-    for rest in rests.items:
-        print(rest)
-    print(len(rests.items))
+    # for rest in rests.items:
+    #     print(rest)
+    # print(len(rests.items))
 
     return render_template("page.html", rests=rests ,title="page")
 
@@ -111,10 +111,10 @@ def gnavi():
                         opening_hours = res["rest"][i]["opentime"],
                         budget = res["rest"][i]["budget"]
                    )
-            print("######################")
-            print(res["rest"][i]["pr"]["pr_short"])
-            print(res["rest"][i]["pr"]["pr_long"])
-            print("######################")
+            # print("######################")
+            # print(res["rest"][i]["pr"]["pr_short"])
+            # print(res["rest"][i]["pr"]["pr_long"])
+            # print("######################")
 
             restaurants.append(rest)
 

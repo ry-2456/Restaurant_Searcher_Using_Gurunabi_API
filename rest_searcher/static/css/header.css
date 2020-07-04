@@ -14,7 +14,7 @@ header .headline {
 
 ul.nav-list {
   float: right;
-  list-style: none;
+  /*list-style: none;*/
   height: 70px;
   margin: 0 100px;
   padding: 0;
@@ -36,7 +36,7 @@ li.nav-list-item {
 /*クリックできる範囲を広くする*/
 header a {
   color: #f2f2f2;
-  text-decoration: none;
+  /*text-decoration: none;*/
   display: block;
 }
 

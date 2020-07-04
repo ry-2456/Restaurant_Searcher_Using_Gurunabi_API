@@ -8,11 +8,13 @@
   list-style: none;
   margin: 0 auto;
   padding: 0;
-  overflow: hidden; /*floatしてるliがulからはみ出ないように*/
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 86ad9bc... fd
+  /*overflow: hidden; /*floatしてるliがulからはみ出ないように*/
+}
+
+.clearfix::after {
+  content: " ";  
+  display: block;
+  clear: both;
 }
 
 .pagenation li {
@@ -30,10 +32,6 @@
   background-color: #ffffff;
 }
 .pagenation .page-btn:hover {
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 86ad9bc... fd
   color: #ff6600;
 }
 

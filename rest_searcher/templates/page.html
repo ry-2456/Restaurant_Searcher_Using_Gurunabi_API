@@ -8,61 +8,24 @@
     <a href="{{ url_for('test2', username='rintarou') }}"> click me to go test2</a>
   </div>
   #}
-  <div>
-    {% for restaurant in rests.items %}
-      <div style="border: 10px soild black;">
-        <table border="1" style="text-align: center;">
-          <tr>
-            <th>name</th>
-            <th>img_url1</th>
-            <th>img_url2</th>
-          </tr>
-          <tr>
-            <td>{{ restaurant.name }}</td>
-
-            {% if restaurant.img_url1 %}
-              <td><img src="{{ restaurant.img_url1 }}" /></td>
-            {% else %}
-              <td>画像がありません</td>
-            {% endif %}
-
-            {% if restaurant.img_url2 %}
-              <td><img src="{{ restaurant.img_url2 }}" /></td>
-            {% else %}
-              <td>画像がありません</td>
-            {% endif %}
-          </tr>
-          <tr>
-            <th>address</th>
-            <th>tel</th>
-            <th>opening_hours</th>
-          </tr>
-          <tr>
-            <td>{{ restaurant.address }}</td>
-            <td>{{ restaurant.tel }}</td>
-            <td>{{ restaurant.opening_hours }}</td>
-          </tr>
-          <tr>
-            <td><a href="{{ url_for('gnavi_detail', id=restaurant.id) }}" target="_blank">詳細</a>
-          </tr>
-        </table>
-      </div>
-    {% endfor %}
-  </div>
 
   <!-- レストラン一覧 -->
   <div class="main-content">
     {% for rest in rests.items %}
-      <div class="rest-item">
-        <div class="rest-img" style="border: solid 1px red;">
-          {% if rest.img_url1 %}
-            <img src="{{ rest.img_url1 }}" />
-          {% elif rest.img_url2 %}
-            <img src="{{ rest.img_url2 }}" />
-          {% endif %}
-        </div>
-        <div class="rest-info-container">
+      <div class="rest-item clearfix" style="border: solid 2px green;">
+        <div class="rest-name" style="border:solid 2px orange;">
           <a href="{{ url_for('gnavi_detail', id=rest.id) }}" target="_blank">{{ rest.name }}</a>
+        </div>
+        <div class="rest-img" style="border: solid 2px red;">
+          <a href="{{ url_for('gnavi_detail', id=rest.id) }}">
+            {% if rest.img_url1 %}
+              <img src="{{ rest.img_url1 }}" />
+            {% elif rest.img_url2 %}
+              <img src="{{ rest.img_url2 }}" />
+            {% endif %}
+          </a>
+        </div>
+        <div class="rest-info-container" style="border:solid 2px blue;">
           <ul class="rest-info">
             <li class="rest-access rest-info-elem"><img src="{{ url_for('static', filename='img/train.svg') }}" />守口市駅徒歩3分</li>
             <li class="rest-openinghours rest-info-elem"><img src="{{ url_for('static', filename='img/clock.svg') }}" /><p>{{ rest.opening_hours }}</p></li>
@@ -74,7 +37,7 @@
   </div>
 
   <div class="pagenation">
-    <ul class="page-numbers">
+    <ul class="page-numbers clearfix">
       <!-- 次ページヘのリンク -->
       {% if rests.prev_num %}
         <li><a href="{{ url_for('page', page=rests.prev_num) }}" class="prev-page page-btn"> < </a></li>
