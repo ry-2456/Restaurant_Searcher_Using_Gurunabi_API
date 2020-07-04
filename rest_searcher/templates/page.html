@@ -10,59 +10,63 @@
   #}
 
   <!-- レストラン一覧 -->
-  <div class="main-content">
-    {% for rest in rests.items %}
-      <div class="rest-item clearfix" style="border: solid 2px green;">
-        <div class="rest-name" style="border:solid 2px orange;">
-          <a href="{{ url_for('gnavi_detail', id=rest.id) }}" target="_blank">{{ rest.name }}</a>
+  <div class="wrapper">
+    <div class="main-content">
+      {% for rest in rests.items %}
+        <div class="rest-item clearfix" style="border: solid 2px green;">
+          <div class="rest-name" style="border:solid 2px orange;">
+            <a href="{{ url_for('gnavi_detail', id=rest.id) }}" target="_blank">{{ rest.name }}</a>
+          </div>
+          <div class="rest-img" style="border: solid 2px red;">
+            <a href="{{ url_for('gnavi_detail', id=rest.id) }}">
+              {% if rest.img_url1 %}
+                <img src="{{ rest.img_url1 }}" />
+              {% elif rest.img_url2 %}
+                <img src="{{ rest.img_url2 }}" />
+              {% endif %}
+            </a>
+          </div>
+          <div class="rest-info-container" style="border:solid 2px blue;">
+            <ul class="rest-info">
+              <li class="rest-access rest-info-elem"><img src="{{ url_for('static', filename='img/train.svg') }}" />守口市駅徒歩3分</li>
+              <li class="rest-openinghours rest-info-elem"><img src="{{ url_for('static', filename='img/clock.svg') }}" /><p>{{ rest.opening_hours }}</p></li>
+              <li class="rest-budget rest-info-elem"><img src="{{ url_for('static', filename='img/money.svg') }}" />平均予算{{ rest.budget }}円</li>
+            </ul>
+          </div>
         </div>
-        <div class="rest-img" style="border: solid 2px red;">
-          <a href="{{ url_for('gnavi_detail', id=rest.id) }}">
-            {% if rest.img_url1 %}
-              <img src="{{ rest.img_url1 }}" />
-            {% elif rest.img_url2 %}
-              <img src="{{ rest.img_url2 }}" />
-            {% endif %}
-          </a>
-        </div>
-        <div class="rest-info-container" style="border:solid 2px blue;">
-          <ul class="rest-info">
-            <li class="rest-access rest-info-elem"><img src="{{ url_for('static', filename='img/train.svg') }}" />守口市駅徒歩3分</li>
-            <li class="rest-openinghours rest-info-elem"><img src="{{ url_for('static', filename='img/clock.svg') }}" /><p>{{ rest.opening_hours }}</p></li>
-            <li class="rest-budget rest-info-elem"><img src="{{ url_for('static', filename='img/money.svg') }}" />平均予算{{ rest.budget }}円</li>
-          </ul>
-        </div>
-      </div>
-    {% endfor %}
-  </div>
-
-  <div class="pagenation">
-    <ul class="page-numbers clearfix">
-      <!-- 次ページヘのリンク -->
-      {% if rests.prev_num %}
-        <li><a href="{{ url_for('page', page=rests.prev_num) }}" class="prev-page page-btn"> < </a></li>
-      {% endif %}
-
-      <!-- 各ページヘのリンク -->
-      {% for page_num in rests.iter_pages(left_edge=2, left_current=2, right_current=3, right_edge=2) %}
-        {% if page_num %}
-          {% if rests.page == page_num %}
-            <!-- 現在のページ -->
-            <li><a href="{{ url_for('page', page=page_num) }}" class="current-page page-btn"> {{ page_num }} </a></li>
-          {% else %}
-            <!-- 現在以外のページ -->
-            <li><a href="{{ url_for('page', page=page_num) }}" class="page-btn"> {{ page_num }}</a></li>
-          {% endif %}
-        {% else %}
-          <li><span>...</span></li>
-        {% endif %}
       {% endfor %}
+    </div>
 
-      <!-- 前ページヘのリンク -->
-      {% if rests.next_num %}
-        <li><a href="{{ url_for('page', page=rests.next_num) }}" class="next-page page-btn"> > </a></li>
-      {% endif %}
-    </ul>
+    <div class="wrapper">
+      <div class="pagenation">
+        <ul class="page-numbers clearfix">
+          <!-- 次ページヘのリンク -->
+          {% if rests.prev_num %}
+            <li><a href="{{ url_for('page', page=rests.prev_num) }}" class="prev-page page-btn"> < </a></li>
+          {% endif %}
+
+          <!-- 各ページヘのリンク -->
+          {% for page_num in rests.iter_pages(left_edge=2, left_current=2, right_current=3, right_edge=2) %}
+            {% if page_num %}
+              {% if rests.page == page_num %}
+                <!-- 現在のページ -->
+                <li><a href="{{ url_for('page', page=page_num) }}" class="current-page page-btn"> {{ page_num }} </a></li>
+              {% else %}
+                <!-- 現在以外のページ -->
+                <li><a href="{{ url_for('page', page=page_num) }}" class="page-btn"> {{ page_num }}</a></li>
+              {% endif %}
+            {% else %}
+              <li><span>...</span></li>
+            {% endif %}
+          {% endfor %}
+
+          <!-- 前ページヘのリンク -->
+          {% if rests.next_num %}
+            <li><a href="{{ url_for('page', page=rests.next_num) }}" class="next-page page-btn"> > </a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
   </div>
 
 {% endblock %}

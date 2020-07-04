@@ -1,63 +1,182 @@
 {% extends "layout.html" %}
 {% block content %}
   <!-- 検索半径を指定 デフォルトでは500m -->
+  {#
   {% if search_radius %}
     <p>検索半径は{{ search_radius }}mです</p>
   {% endif %}
-  <form method="POST" action="">
-    <label for="rad300">300m</label>
-    <input type="radio" name="search_radius_idx" value="1" id="rad300">
-    <!-- デフォルトの値 -->
-    <label for="rad500">500m</label>
-    <input type="radio" name="search_radius_idx" value="2" id="rad500" checked>
-    <label for="rad1000">1000m</label>
-    <input type="radio" name="search_radius_idx" value="3" id="rad1000">
-    <label for="rad2000">2000m</label>
-    <input type="radio" name="search_radius_idx" value="4" id="rad2000"> 
-    <label for="rad3000">3000m</label> 
-    <input type="radio" name="search_radius_idx" value="5" id="rad3000">
+  #}
 
-    <!-- 送信ボタン -->
-    <input type="submit" value="送信する">
-  </form>
+  <div class="wrapper">
+    <div class="filtering">
+      <form method="POST" action="">
+        <table>
+          <!-- キーワード-->
+          <tr>
+            <th>
+              キーワード
+            <th>
+            <td>
+              <div>
+                <!-- キーワード -->
+                <input type="radio" name="and_or" value="and" id="andbtn"> 
+                <label for="andbtn">and</label>
+                <input type="radio" name="and_or" value="or" id="orbtn">
+                <label for="orbtn">or</label> 
+                <input type="search" placeholder="ラーメン 大阪">
+              </div>
+            </td> 
+          </tr>
+          <!-- メニュー -->
+          <tr>
+            <th>
+              メニュー
+            <th>
+            <td>
+              <div>
+                <!-- メニュー -->
+                <!-- ランチ -->
+                <div>
+                  <input type="checkbox" name="lunch" value="1" id="lunch">
+                  <label for="lunch">ランチ</label>
+                  <!-- 14:00以降ランチ -->
+                  <input type="checkbox" name="late_lunch" value="1" id="late_lunch">
+                  <label for="late_lunch">14時以降ランチ</label>
+                  <!-- モーニング・朝ごはん -->
+                  <input type="checkbox" name="breakfast" value="1" id="breakfast">
+                  <label for="breakfast">モーニング・朝ごはん</label>
+                </div>
+                <div>
+                  <!-- 食べ放題 -->
+                  <input type="checkbox" name="buffet" value="1" id="buffet">
+                  <label for="buffet">食べ放題</label>
+                  <!-- 飲み放題 -->
+                  <input type="checkbox" name="bottomless_cup" value="1" id="bottomless_cup">
+                  <label for="bottomless_cup">飲み放題</label>
+                  <!-- キッズメニュー -->
+                  <!-- <input type="checkbox" name="kids_menu" value="1" id="kids_menu">
+                  <label for="kids_menu">キッズメニュー</label> -->
+                </div>
+              </div>
+            </td> 
+          </tr>
+          <!-- web予約 -->
+          <tr>
+            <th>
+              web予約 
+            <th>
+            <td>
+              <div>
+                <!-- web予約の可不可 -->
+                <input type="checkbox" name="web_reserve" value="1" id="web_reserve">
+                <label for="web_reserve">web予約</label>
+              </div>
+            </td> 
+          </tr>
+          <!-- 席-->
+          <tr>
+            <th>
+              お席
+            <th>
+            <td>
+              <div>
+                <!-- お席 -->
+                <input type="checkbox" name="" value="1" id="no_smoking">
+                <label for="no_smoking">禁煙あり</label>
+                <input type="checkbox" name="" value="1" id="private_room">
+                <label for="private_room">個室あり</label>
+              </div>
+            </td> 
+          </tr>
+          <!-- 駐車場-->
+          <tr>
+            <th>
+              駐車場
+            <th>
+            <td>
+            </td> 
+          </tr>
+          <!-- 半径 -->
+          <tr>
+            <th>
+              検索半径
+            <th>
+            <td>
+              <div>
+                <!-- 検索半径 -->
+                <input type="radio" name="search_radius_idx" value="1" id="rad300">
+                <label for="rad300">300m</label>
+                <!-- デフォルトの値 -->
+                <input type="radio" name="search_radius_idx" value="2" id="rad500" checked>
+                <label for="rad500">500m</label>
+                <input type="radio" name="search_radius_idx" value="3" id="rad1000">
+                <label for="rad1000">1000m</label>
+                <input type="radio" name="search_radius_idx" value="4" id="rad2000"> 
+                <label for="rad2000">2000m</label>
+                <input type="radio" name="search_radius_idx" value="5" id="rad3000">
+                <label for="rad3000">3000m</label> 
+              </div>
+            </td> 
+          </tr>
+          <!-- 支払い方法-->
+          <tr>
+            <th>
+              支払い方法
+            <th>
+            <td>
+              <div>
+                <!-- 電子マネー -->
+                <input type="checkbox" name="" value="1" id="e_money">
+                <label for="e_money">電子マネー</label>
+              </div>
+            </td> 
+          </tr>
+        </table>
 
-  {% for restaurant in rests %}
-    <div style="border: 10px soild black;">
-      <table border="1" style="text-align: center;">
-        <tr>
-          <th>name</th>
-          <th>img_url1</th>
-          <th>img_url2</th>
-        </tr>
-        <tr>
-          <td>{{ restaurant.name }}</td>
+        <!-- 送信ボタン -->
+        <input type="submit" value="絞り込み検索する">
 
-          {% if restaurant.img_url1 %}
-            <td><img src="{{ restaurant.img_url1 }}" /></td>
-          {% else %}
-            <td>画像がありません</td>
-          {% endif %}
+      </form>
+    </div>
 
-          {% if restaurant.img_url2 %}
-            <td><img src="{{ restaurant.img_url2 }}" /></td>
-          {% else %}
-            <td>画像がありません</td>
-          {% endif %}
-        </tr>
-        <tr>
-          <th>address</th>
-          <th>tel</th>
-          <th>opening_hours</th>
-        </tr>
-        <tr>
-          <td>{{ restaurant.address }}</td>
-          <td>{{ restaurant.tel }}</td>
-          <td>{{ restaurant.opening_hours }}</td>
-        </tr>
-        <tr>
-          <td><a href="{{ url_for('gnavi_detail', id=restaurant.id) }}" target="_blank">詳細</a>
-        </tr>
-      </table>
+    {% for restaurant in rests %}
+      <div style="border: 10px soild black;">
+        <table border="1" style="text-align: center;">
+          <tr>
+            <th>name</th>
+            <th>img_url1</th>
+            <th>img_url2</th>
+          </tr>
+          <tr>
+            <td>{{ restaurant.name }}</td>
+
+            {% if restaurant.img_url1 %}
+              <td><img src="{{ restaurant.img_url1 }}" /></td>
+            {% else %}
+              <td>画像がありません</td>
+            {% endif %}
+
+            {% if restaurant.img_url2 %}
+              <td><img src="{{ restaurant.img_url2 }}" /></td>
+            {% else %}
+              <td>画像がありません</td>
+            {% endif %}
+          </tr>
+          <tr>
+            <th>address</th>
+            <th>tel</th>
+            <th>opening_hours</th>
+          </tr>
+          <tr>
+            <td>{{ restaurant.address }}</td>
+            <td>{{ restaurant.tel }}</td>
+            <td>{{ restaurant.opening_hours }}</td>
+          </tr>
+          <tr>
+            <td><a href="{{ url_for('gnavi_detail', id=restaurant.id) }}" target="_blank">詳細</a>
+          </tr>
+        </table>
+      </div>
     </div>
   {% endfor %}
 {% endblock %}

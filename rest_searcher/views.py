@@ -9,6 +9,12 @@ from rest_searcher.models import Restaurant
 # def home():
 #     return "home"
 
+@app.route("/formtest", methods=["POST", "GET"])
+def formtest():
+    launch = request.form.get("lunch", default=0, type=int) # ない場合None
+    print(type(launch), launch)
+    return render_template("filtering.html")
+
 @app.route("/test1/<string:username>")
 def test1(username):
     print(type(username))
@@ -22,7 +28,7 @@ def test2(username):
 def page():
     page = request.args.get('page', default=1, type=int)
     rests = db.session.query(Restaurant).order_by(
-        Restaurant.id.asc()).paginate(page=page, per_page=20)
+        Restaurant.id.asc()).paginate(page=page, per_page=2)
     # for rest in rests.items:
     #     print(rest)
     # print(len(rests.items))
@@ -47,6 +53,10 @@ def get_current_position():
 
 @app.route("/gnavi/<id>", methods=["POST", "GET"])
 def gnavi_detail(id):
+    # GETの場合はこれでパラメータを受け取れる
+    id_test = request.args.get('page', default=1, type=int)
+    print(id_test)
+
     rest = db.session.query(Restaurant).filter(Restaurant.id == id).first()
     return render_template("detailed_page.html", rest=rest)
     
@@ -77,7 +87,8 @@ def gnavi():
         params = {}
         params["keyid"] = api_key
         params["freeword"] = "居酒屋"
-        params["hit_per_page"] = 100
+        # params["hit_per_page"] = 100
+        params["hit_per_page"] = 10
 
         # if session.get("lat") is not None and session.get("lng") is not None:
         #     params["latitude"] = round(session["lat"], 6)
@@ -126,7 +137,8 @@ def gnavi():
         all_restaurant_info = db.session.query(Restaurant).all()
 
         # receive search radius idx 
-        search_radius_idx = request.form["search_radius_idx"]
+        # search_radius_idx = request.form["search_radius_idx"] # ない場合raise error
+        search_radius_idx = request.form.get("search_radius_idx") # ない場合None
 
         search_radius = {"1":300, "2":500, "3":1000, "4":2000, "5":3000}[search_radius_idx]
 
