@@ -19,8 +19,8 @@ def test():
 
 @app.route("/formtest", methods=["POST", "GET"])
 def formtest():
-    launch = request.form.get("lunch", default=0, type=int) # ない場合None
-    print(type(launch), launch)
+    lunch = request.form.get("lunch", default=0, type=int) # ない場合None
+    print(type(lunch), lunch)
     return render_template("filtering.html")
 
 @app.route("/test1/<string:username>")
@@ -121,29 +121,27 @@ def gnavi():
         # Add restaurants to database
         restaurants = []
         for i in range(cnt):
-            if len(res["rest"][i]["opentime"]) < 60:
-                continue
+            if len(res["rest"][i]["opentime"]) < 60: continue
+
+            # access
             line = res["rest"][i]["access"]["line"]
             station = res["rest"][i]["access"]["station"]
             station_exit = res["rest"][i]["access"]["station_exit"]
             walk = res["rest"][i]["access"]["walk"]
-
             access = line + station + station_exit + "より"
-            print(line, len(line))
-            if '車' in walk:
-                access = access + walk + '分'
-            else:
-                access = access + "徒歩" + str(walk) + '分'
+            if '車' in walk: access = access + walk + '分'
+            else:            access = access + "徒歩" + str(walk) + '分'
 
             rest = Restaurant(
-                        name=res["rest"][i]["name"],
+                        name = res["rest"][i]["name"],
                         img_url1 = res["rest"][i]["image_url"]["shop_image1"],
                         img_url2 = res["rest"][i]["image_url"]["shop_image2"],
                         address = res["rest"][i]["address"],
                         tel = res["rest"][i]["tel"],
                         opening_hours = res["rest"][i]["opentime"],
                         budget = res["rest"][i]["budget"],
-                        access = access
+                        access = access,
+                        holiday = res["rest"][i]["holiday"]
                    )
 
             restaurants.append(rest)

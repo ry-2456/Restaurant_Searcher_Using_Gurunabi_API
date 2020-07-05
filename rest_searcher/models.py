@@ -13,6 +13,7 @@ class Restaurant(db.Model):
     budget = db.Column(db.Integer) # 平均予算
     opening_hours = db.Column(db.Text)
     access = db.Column(db.String)
+    holiday = db.Column(db.String)
 
     def __repr__(self):
         return "<Restaurant name={} img_url1={} img_url2={}".format(

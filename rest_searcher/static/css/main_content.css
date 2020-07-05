@@ -8,7 +8,7 @@
 div.rest-item {
   /*width: 700px;*/
   margin: 20px auto;
-  border: solid 1px #dddddd;
+  border: solid 2px #dddddd;
   /*overflow: hidden;*/
 }
 
@@ -31,7 +31,7 @@ div.rest-item {
 div.rest-info-container {
   /*display: inline-box;*/
   box-sizing: border-box;
-  width: 498px;
+  width: 696px;
   float: left;
 }
 

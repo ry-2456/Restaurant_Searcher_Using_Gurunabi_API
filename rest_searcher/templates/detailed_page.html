@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-  <h1>{{ rest.name }}(詳細画面)</h1>
+  {#<h1>{{ rest.name }}(詳細画面)</h1>
   <div style="border: 10px soild black;">
     <table border="1" style="text-align: center;">
       <tr>
@@ -34,9 +34,116 @@
         <td>{{ rest.opening_hours }}</td>
       </tr>
     </table>
-  </div>
-  <div class="rest-item">
+  </div>#}
 
+  <div class="wrapper">
+    <div class="detailed_page">
+
+      <div class="d-top">
+        <div class="d-top-left">
+          <div class="rest-name">
+            <h1>{{ rest.name }}</h1>
+          </div>
+          <div class="budget">
+            <ul>
+              <li>ランチ1000円</li>
+              <li>宴会・パーティー予算</li>
+            </ul>
+          </div>
+        </div>
+        <div class="d-top-left">
+          <ul>
+            <a href=#>クーポン</a>
+            <p>070-4165-5923</p> 
+          </ul>
+        </div>
+      </div>
+
+      <div class="d-pr">
+        <div class="rest-imgs">
+          <div class="main-img">
+            {% if rest.img_url1 %}
+              <img src="{{ rest.img_url1 }}" />
+            {% elif rest.img_url2 %}
+              <img src="{{ rest.img_url2 }}" />
+            {% endif %}
+          </div>
+          <div class="sub-img">
+          </div>
+        </div>
+        <div class="pr">
+        </div>
+      </div>
+
+      <div class="d-access clearfix">
+        <div id="map-canvas">
+        </div>
+        <div class="d-access-right">
+          <dl>
+            <div class="access">
+              <dt>住所・アクセス</dt> 
+              <dd><p>{{ rest.address }}</p><p>{{ rest.access }}</p></dd>
+            </div>
+            <div class="opening-hours">
+              <dt>営業時間・定休日</dt> 
+              <dd><p>{{ rest.opening_hours }}</p><p>{{ rest.holiday }}</p></dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="d-all-info">
+        <table>
+          <tr>
+            <th>店名</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>営業時間</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>電話番号</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>住所</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>アクセス</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>駐車場</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>平均予算</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>クレジットカード</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>電子マネー</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th></th>
+            <td></td>
+          </tr>
+          <tr>
+            <th></th>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+    </div>
   </div>
+  <!-- google map apiの読み込み -->
+  {#<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQM4ojhGRxj_N1rnbNCHSjIv062WXP3SU&language=ja"></script>
+  <script src="{{ url_for('static', filename='js/google-map.js') }}" type="text/javascript"></script>#}
 {% endblock %}
 

@@ -14,7 +14,7 @@
     <div class="main-content">
       {% for rest in rests.items %}
         <div class="rest-item clearfix">
-          <div class="rest-name" style="border:solid 2px orange;">
+          <div class="rest-name">
             <a href="{{ url_for('gnavi_detail', id=rest.id) }}" target="_blank">{{ rest.name }}</a>
           </div>
           <div class="rest-img">
