@@ -1,5 +1,82 @@
 .filtering {
   /*width: 700px;*/
-  border: solid 2px black;
-  margin: 0 auto;
+  border: solid 2px #dddddd;
+  margin: 20px auto;
 }
+
+.filtering table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.filtering th, .filtering td {
+  border-bottom: solid 1px #dddddd;
+  height: 40px;
+}
+
+.filtering th {
+  /*border: solid 1px red;*/
+  box-sizing: border-box;
+  width: 25%;
+}
+
+.search-box-wrapper, .andor {
+  display: inline-block;
+}
+
+.search-box-wrapper input {
+  padding: 5px;
+  width: 300px;
+}
+
+.search-box-wrapper input:focus {
+  outline: 0;
+  border: 2px solid #cc3333;
+}
+
+
+/*.filtering td {
+  border: solid 1px green;
+}*/
+
+
+.form-col3, .form-col5 {
+  box-sizing: border-box;
+  /*border: solid 1px blue;*/
+  margin: 0;
+  display: inline-block;
+}
+
+.form-col3 {
+  width: 32.6%;
+}
+
+.form-col5 {
+  width: 19%;
+}
+
+.submit-btn-wrapper {
+  text-align: center;
+  border-top: solid 1px #dddddd;
+}
+
+.submit-btn {
+  width: 200px;
+  display: inline-block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  border: solid 2px #cc3333;
+  background-color: #cc3333;
+  color: #ffffff;
+  border-radius: 3px;
+}
+
+.submit-btn:hover {
+  /*background-color: #d65b5b;
+  border: solid 2px #d65b5b;*/
+  background-color: #a32828;
+  border: solid 2px #a32828;
+  cursor: pointer;
+}
+

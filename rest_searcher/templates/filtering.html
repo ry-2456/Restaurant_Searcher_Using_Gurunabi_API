@@ -15,15 +15,19 @@
           <tr>
             <th>
               キーワード
-            <th>
+            </th>
             <td>
               <div>
                 <!-- キーワード -->
-                <input type="radio" name="and_or" value="and" id="andbtn"> 
-                <label for="andbtn">and</label>
-                <input type="radio" name="and_or" value="or" id="orbtn">
-                <label for="orbtn">or</label> 
-                <input type="search" placeholder="ラーメン 大阪">
+                <div class="search-box-wrapper">
+                  <input type="search" placeholder="ラーメン 大阪">
+                </div>
+                <div class="andor">
+                  <input type="radio" name="freeword_condition" value="1" id="and" checked> 
+                  <label for="and">AND検索</label>
+                  <input type="radio" name="freeword_condition" value="1" id="or">
+                  <label for="or">OR検索</label> 
+                </div>
               </div>
             </td> 
           </tr>
@@ -31,31 +35,41 @@
           <tr>
             <th>
               メニュー
-            <th>
+            </th>
             <td>
               <div>
                 <!-- メニュー -->
                 <!-- ランチ -->
                 <div>
-                  <input type="checkbox" name="lunch" value="1" id="lunch">
-                  <label for="lunch">ランチ</label>
-                  <!-- 14:00以降ランチ -->
-                  <input type="checkbox" name="late_lunch" value="1" id="late_lunch">
-                  <label for="late_lunch">14時以降ランチ</label>
-                  <!-- モーニング・朝ごはん -->
-                  <input type="checkbox" name="breakfast" value="1" id="breakfast">
-                  <label for="breakfast">モーニング・朝ごはん</label>
+                  <div class="form-col3">
+                    <input type="checkbox" name="lunch" value="1" id="lunch">
+                    <label for="lunch">ランチ</label>
+                  </div>
+                  <div class="form-col3">
+                    <!-- 14:00以降ランチ -->
+                    <input type="checkbox" name="late_lunch" value="1" id="late_lunch">
+                    <label for="late_lunch">14時以降ランチ</label>
+                  </div>
+                  <div class="form-col3">
+                    <!-- モーニング・朝ごはん -->
+                    <input type="checkbox" name="breakfast" value="1" id="breakfast">
+                    <label for="breakfast">モーニング・朝ごはん</label>
+                  </div>
                 </div>
                 <div>
-                  <!-- 食べ放題 -->
-                  <input type="checkbox" name="buffet" value="1" id="buffet">
-                  <label for="buffet">食べ放題</label>
-                  <!-- 飲み放題 -->
-                  <input type="checkbox" name="bottomless_cup" value="1" id="bottomless_cup">
-                  <label for="bottomless_cup">飲み放題</label>
-                  <!-- キッズメニュー -->
-                  <!-- <input type="checkbox" name="kids_menu" value="1" id="kids_menu">
-                  <label for="kids_menu">キッズメニュー</label> -->
+                  <div class="form-col3">
+                    <!-- 食べ放題 -->
+                    <input type="checkbox" name="buffet" value="1" id="buffet">
+                    <label for="buffet">食べ放題</label>
+                  </div>
+                  <div class="form-col3">
+                    <!-- 飲み放題 -->
+                    <input type="checkbox" name="bottomless_cup" value="1" id="bottomless_cup">
+                    <label for="bottomless_cup">飲み放題</label>
+                    <!-- キッズメニュー -->
+                    <!-- <input type="checkbox" name="kids_menu" value="1" id="kids_menu">
+                    <label for="kids_menu">キッズメニュー</label> -->
+                  </div>
                 </div>
               </div>
             </td> 
@@ -64,12 +78,32 @@
           <tr>
             <th>
               web予約 
-            <th>
+            </th>
             <td>
               <div>
-                <!-- web予約の可不可 -->
-                <input type="checkbox" name="web_reserve" value="1" id="web_reserve">
-                <label for="web_reserve">web予約</label>
+                <div class="form-col3">
+                  <!-- web予約の可不可 -->
+                  <input type="checkbox" name="web_reserve" value="1" id="web_reserve">
+                  <label for="web_reserve">web予約</label>
+                </div>
+              </div>
+            </td> 
+          </tr>
+          <tr>
+            <th>
+              お店以外で食べる
+            </th>
+            <td>
+              <div>
+                <!-- お席 -->
+                <div class="form-col3">
+                  <input type="checkbox" name="" value="1" id="takeout">
+                  <label for="takeout">テイクアウト可</label>
+                </div>
+                <div class="form-col3">
+                  <input type="checkbox" name="" value="1" id="deliverly">
+                  <label for="deliverly">デリバリー可</label>
+                </div>
               </div>
             </td> 
           </tr>
@@ -77,14 +111,18 @@
           <tr>
             <th>
               お席
-            <th>
+            </th>
             <td>
               <div>
                 <!-- お席 -->
-                <input type="checkbox" name="" value="1" id="no_smoking">
-                <label for="no_smoking">禁煙あり</label>
-                <input type="checkbox" name="" value="1" id="private_room">
-                <label for="private_room">個室あり</label>
+                <div class="form-col3">
+                  <input type="checkbox" name="" value="1" id="no_smoking">
+                  <label for="no_smoking">禁煙あり</label>
+                </div>
+                <div class="form-col3">
+                  <input type="checkbox" name="" value="1" id="private_room">
+                  <label for="private_room">個室あり</label>
+                </div>
               </div>
             </td> 
           </tr>
@@ -92,29 +130,44 @@
           <tr>
             <th>
               駐車場
-            <th>
+            </th>
             <td>
+                <!-- 駐車場 -->
+                <div class="form-col3">
+                  <input type="checkbox" name="" value="1" id="parking">
+                  <label for="parking">駐車場あり</label>
+                </div>
             </td> 
           </tr>
           <!-- 半径 -->
           <tr>
             <th>
               検索半径
-            <th>
+            </th>
             <td>
               <div>
                 <!-- 検索半径 -->
-                <input type="radio" name="search_radius_idx" value="1" id="rad300">
-                <label for="rad300">300m</label>
-                <!-- デフォルトの値 -->
-                <input type="radio" name="search_radius_idx" value="2" id="rad500" checked>
-                <label for="rad500">500m</label>
-                <input type="radio" name="search_radius_idx" value="3" id="rad1000">
-                <label for="rad1000">1000m</label>
-                <input type="radio" name="search_radius_idx" value="4" id="rad2000"> 
-                <label for="rad2000">2000m</label>
-                <input type="radio" name="search_radius_idx" value="5" id="rad3000">
-                <label for="rad3000">3000m</label> 
+                <div class="form-col3">
+                  <input type="radio" name="search_radius_idx" value="1" id="rad300">
+                  <label for="rad300">300m</label>
+                </div>
+                <div class="form-col3">
+                  <!-- デフォルトの値 -->
+                  <input type="radio" name="search_radius_idx" value="2" id="rad500" checked>
+                  <label for="rad500">500m</label>
+                </div>
+                <div class="form-col3">
+                  <input type="radio" name="search_radius_idx" value="3" id="rad1000">
+                  <label for="rad1000">1000m</label>
+                </div>
+                  <div class="form-col3">
+                  <input type="radio" name="search_radius_idx" value="4" id="rad2000"> 
+                  <label for="rad2000">2000m</label>
+                </div>
+                <div class="form-col3">
+                  <input type="radio" name="search_radius_idx" value="5" id="rad3000">
+                  <label for="rad3000">3000m</label> 
+                </div>
               </div>
             </td> 
           </tr>
@@ -122,19 +175,28 @@
           <tr>
             <th>
               支払い方法
-            <th>
+            </th>
             <td>
               <div>
+                <!-- カード -->
+                <div class="form-col3">
+                  <input type="checkbox" name="" value="1" id="card">
+                  <label for="card">カード決済可</label>
+                </div>
                 <!-- 電子マネー -->
-                <input type="checkbox" name="" value="1" id="e_money">
-                <label for="e_money">電子マネー</label>
+                <div class="form-col3">
+                  <input type="checkbox" name="" value="1" id="e_money">
+                  <label for="e_money">電子マネー決済可</label>
+                </div>
               </div>
             </td> 
           </tr>
         </table>
-
-        <!-- 送信ボタン -->
-        <input type="submit" value="絞り込み検索する">
+        
+        <div class="submit-btn-wrapper">
+          <!-- 送信ボタン -->
+          <input class="submit-btn" type="submit" value="検索する">
+        </div>
 
       </form>
     </div>

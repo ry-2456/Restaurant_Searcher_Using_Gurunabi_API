@@ -13,11 +13,11 @@
   <div class="wrapper">
     <div class="main-content">
       {% for rest in rests.items %}
-        <div class="rest-item clearfix" style="border: solid 2px green;">
+        <div class="rest-item clearfix">
           <div class="rest-name" style="border:solid 2px orange;">
             <a href="{{ url_for('gnavi_detail', id=rest.id) }}" target="_blank">{{ rest.name }}</a>
           </div>
-          <div class="rest-img" style="border: solid 2px red;">
+          <div class="rest-img">
             <a href="{{ url_for('gnavi_detail', id=rest.id) }}">
               {% if rest.img_url1 %}
                 <img src="{{ rest.img_url1 }}" />
@@ -26,10 +26,10 @@
               {% endif %}
             </a>
           </div>
-          <div class="rest-info-container" style="border:solid 2px blue;">
+          <div class="rest-info-container">
             <ul class="rest-info">
-              <li class="rest-access rest-info-elem"><img src="{{ url_for('static', filename='img/train.svg') }}" />守口市駅徒歩3分</li>
-              <li class="rest-openinghours rest-info-elem"><img src="{{ url_for('static', filename='img/clock.svg') }}" /><p>{{ rest.opening_hours }}</p></li>
+              <li class="rest-access rest-info-elem"><img src="{{ url_for('static', filename='img/train.svg') }}" /> {{ rest.access }}</li>
+              <li class="rest-openinghours rest-info-elem"><img src="{{ url_for('static', filename='img/clock.svg') }}" />{{ rest.opening_hours }}</li>
               <li class="rest-budget rest-info-elem"><img src="{{ url_for('static', filename='img/money.svg') }}" />平均予算{{ rest.budget }}円</li>
             </ul>
           </div>
