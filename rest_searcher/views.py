@@ -5,17 +5,6 @@ from flask import Flask, render_template, url_for, request, redirect, session
 from rest_searcher import app, db
 from rest_searcher.models import Restaurant
 
-# @app.route("/")
-# def home():
-#     return "home"
-
-@app.route("/test")
-def test():
-    # name = request.form.get("name", default="unko", type=str) # ない場合None
-    name = request.args.get("name")
-    print(name)
-    return name
-    
 
 @app.route("/formtest", methods=["POST", "GET"])
 def formtest():
@@ -42,17 +31,17 @@ def formtest():
     print("bottomless_cup: {}".format(bottomless_cup))
     print()
     # web予約
-    web_reserve    = request.form.get("bottomless_cup", default=0, type=int) # ない場合None
+    web_reserve    = request.form.get("web_reserve", default=0, type=int) # ない場合None
     print("web_reserve: {}".format(web_reserve))
     print()
     # お店以外で食べる 
-    takeout    = request.form.get("bottomless_cup", default=0, type=int) # ない場合None
-    deliverly    = request.form.get("bottomless_cup", default=0, type=int) # ない場合None
+    takeout    = request.form.get("takeout", default=0, type=int) # ない場合None
+    deliverly    = request.form.get("deliverly", default=0, type=int) # ない場合None
     print("takeout: {}".format(takeout))
     print("deliverly: {}".format(deliverly))
     print()
     # 駐車場
-    parking    = request.form.get("bottomless_cup", default=0, type=int) # ない場合None
+    parking    = request.form.get("parking", default=0, type=int) # ない場合None
     print("parking: {}".format(parking))
     print()
     # 検索範囲
@@ -60,22 +49,13 @@ def formtest():
     print("search_radius_idx: {}".format(search_radius_idx))
     print()
     # 支払い方法
-    e_money    = request.form.get("bottomless_cup", default=0, type=int) # ない場合None
-    card    = request.form.get("bottomless_cup", default=0, type=int) # ない場合None
+    e_money    = request.form.get("e_money", default=0, type=int) # ない場合None
+    card    = request.form.get("card", default=0, type=int) # ない場合None
     print("e_money: {}".format(e_money))
     print("card: {}".format(card))
     print("#########################")
 
     return render_template("filtering.html")
-
-@app.route("/test1/<string:username>")
-def test1(username):
-    print(type(username))
-    return username
-
-@app.route("/test2/<username>")
-def test2(username):
-    return username
 
 @app.route("/page")
 def page():
@@ -103,6 +83,7 @@ def get_latitude_and_longitude():
 @app.route("/pos")
 def get_current_position():
     return render_template("current_pos.html", title="pos")
+
 
 @app.route("/gnavi/<id>", methods=["POST", "GET"])
 def gnavi_detail(id):
@@ -134,12 +115,48 @@ def gnavi():
         print("num rows deleted : {}".format(num_rows_deleted))
 
         # 検索条件の取得
+        # キーワード
+        freeword = (request.form.get("freeword", default='', type=str)).strip() # ない場合None
+        freeword = ','.join(freeword.split()) # 空白文字で区切りカンマで結合
+        # キーワードcondition
+        freeword_condition  = request.form.get("freeword_condition", type=int)
+        # メニュー
+        lunch          = request.form.get("lunch", default=0, type=int) 
+        late_lunch     = request.form.get("late_lunch", default=0, type=int)
+        buffet         = request.form.get("buffet", default=0, type=int) 
+        breakfast      = request.form.get("breakfast", default=0, type=int)
+        bottomless_cup = request.form.get("bottomless_cup", default=0, type=int)
+        # web予約
+        web_reserve    = request.form.get("web_reserve", default=0, type=int)
+        # お店以外で食べる 
+        takeout        = request.form.get("takeout", default=0, type=int)
+        deliverly      = request.form.get("deliverly", default=0, type=int)
+        # 駐車場
+        parking        = request.form.get("parking", default=0, type=int)
+        # 支払い方法
+        e_money        = request.form.get("e_money", default=0, type=int)
+        card           = request.form.get("card", default=0, type=int) 
+        # 検索範囲
+        search_radius_idx  = request.form.get("search_radius_idx", type=int) 
 
-        # Set parameters
+        # リクエストパラメータの設定
         params = {}
         params["keyid"] = api_key
-        params["freeword"] = "居酒屋"
-        params["hit_per_page"] = 100
+        params["freeword"] = freeword
+        params["freeword_condition"] = freeword_condition
+        params["lunch"] = lunch
+        params["late_lunch"] = late_lunch
+        params["buffet"] = buffet
+        params["breakfast"] = breakfast
+        params["bottomless_cup"] = bottomless_cup
+        params["web_reserve"] = web_reserve
+        params["takeout"] = takeout
+        params["deliverly"] = deliverly
+        params["parking"] = parking
+        params["e_money"] = e_money
+        params["card"] = card
+        # params["range"] = search_radius_idx
+        params["hit_per_page"] = 100 # 取得件数
 
         # 現在位置の指定
         # if session.get("lat") is not None and session.get("lng") is not None:
@@ -148,7 +165,7 @@ def gnavi():
         #     search_radius_idx = request.form["search_radius_idx"]
         #     params["range"] = int(search_radius_idx)
 
-        # Request result
+        # リクエスト結果
         res = requests.get(api_url, params)
         res = res.json()
 
@@ -206,3 +223,26 @@ def gnavi():
         return redirect(url_for('page'))
         # return render_template("filtering.html", 
         #     search_radius=search_radius, rests=all_restaurant_info, title="gnavi")
+
+
+
+##########################################################################################
+# @app.route("/")
+# def home():
+#     return "home"
+# 
+# @app.route("/test")
+# def test():
+#     # name = request.form.get("name", default="unko", type=str) # ない場合None
+#     name = request.args.get("name")
+#     print(name)
+#     return name
+# 
+# @app.route("/test1/<string:username>")
+# def test1(username):
+#     print(type(username))
+#     return username
+# 
+# @app.route("/test2/<username>")
+# def test2(username):
+#     return username
