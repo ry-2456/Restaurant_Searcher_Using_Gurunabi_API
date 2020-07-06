@@ -27,7 +27,9 @@ class Restaurant(db.Model):
     
     coupon_pc_url = db.Column(db.String)
     coupon_mobile_url = db.Column(db.String)
-    
+
+    lat = db.Column(db.Float)
+    lng = db.Column(db.Float)
     
 
     def __repr__(self):

@@ -15,10 +15,10 @@
       {% for rest in rests.items %}
         <div class="rest-item clearfix">
           <div class="rest-name">
-            <a href="{{ url_for('gnavi_detail', id=rest.id) }}" target="_blank">{{ rest.name }}</a>
+            <a href="{{ url_for('rest_detailed', id=rest.id) }}" target="_blank">{{ rest.name }}</a>
           </div>
           <div class="rest-img">
-            <a href="{{ url_for('gnavi_detail', id=rest.id) }}">
+            <a href="{{ url_for('rest_detailed', id=rest.id) }}">
               {% if rest.img_url1 %}
                 <img src="{{ rest.img_url1 }}" />
               {% elif rest.img_url2 %}
@@ -42,7 +42,7 @@
         <ul class="page-numbers clearfix">
           <!-- 次ページヘのリンク -->
           {% if rests.prev_num %}
-            <li><a href="{{ url_for('page', page=rests.prev_num) }}" class="prev-page page-btn"> < </a></li>
+            <li><a href="{{ url_for('list', page=rests.prev_num) }}" class="prev-page page-btn"> < </a></li>
           {% endif %}
 
           <!-- 各ページヘのリンク -->
@@ -50,10 +50,10 @@
             {% if page_num %}
               {% if rests.page == page_num %}
                 <!-- 現在のページ -->
-                <li><a href="{{ url_for('page', page=page_num) }}" class="current-page page-btn"> {{ page_num }} </a></li>
+                <li><a href="{{ url_for('list', page=page_num) }}" class="current-page page-btn"> {{ page_num }} </a></li>
               {% else %}
                 <!-- 現在以外のページ -->
-                <li><a href="{{ url_for('page', page=page_num) }}" class="page-btn"> {{ page_num }}</a></li>
+                <li><a href="{{ url_for('list', page=page_num) }}" class="page-btn"> {{ page_num }}</a></li>
               {% endif %}
             {% else %}
               <li><span>...</span></li>
@@ -62,7 +62,7 @@
 
           <!-- 前ページヘのリンク -->
           {% if rests.next_num %}
-            <li><a href="{{ url_for('page', page=rests.next_num) }}" class="next-page page-btn"> > </a></li>
+            <li><a href="{{ url_for('list', page=rests.next_num) }}" class="next-page page-btn"> > </a></li>
           {% endif %}
         </ul>
       </div>
