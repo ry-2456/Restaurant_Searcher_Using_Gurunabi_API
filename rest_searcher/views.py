@@ -1,7 +1,7 @@
+# -*- coding: utf-8 -*-
 import json
 import requests
-from flask import Flask, render_template, url_for
-from flask import request, redirect, session
+from flask import Flask, render_template, url_for, request, redirect, session
 from rest_searcher import app, db
 from rest_searcher.models import Restaurant
 
@@ -19,8 +19,53 @@ def test():
 
 @app.route("/formtest", methods=["POST", "GET"])
 def formtest():
-    lunch = request.form.get("lunch", default=0, type=int) # ない場合None
-    print(type(lunch), lunch)
+    # キーワード
+    freeword = (request.form.get("freeword", default='', type=str)).strip() # ない場合None
+    freeword = ','.join(freeword.split()) # 空白文字で区切りカンマで結合
+    print("########################")
+    print("freeword: {}".format(freeword))
+    print()
+    # キーワードcondition
+    freeword_condition  = request.form.get("freeword_condition", type=int)
+    print("freeword_condition: {}".format(['', "AND", "OR"][freeword_condition]))
+    print()
+    # メニュー
+    lunch          = request.form.get("lunch", default=0, type=int) # ない場合None
+    breakfast      = request.form.get("breakfast", default=0, type=int) # ない場合None
+    late_lunch     = request.form.get("late_lunch", default=0, type=int) # ない場合None
+    buffet         = request.form.get("buffet", default=0, type=int) # ない場合None
+    bottomless_cup = request.form.get("bottomless_cup", default=0, type=int) # ない場合None
+    print("lunch: {}".format(lunch))
+    print("breakfast: {}".format(breakfast))
+    print("late_lunch: {}".format(late_lunch))
+    print("buffet: {}".format(buffet))
+    print("bottomless_cup: {}".format(bottomless_cup))
+    print()
+    # web予約
+    web_reserve    = request.form.get("bottomless_cup", default=0, type=int) # ない場合None
+    print("web_reserve: {}".format(web_reserve))
+    print()
+    # お店以外で食べる 
+    takeout    = request.form.get("bottomless_cup", default=0, type=int) # ない場合None
+    deliverly    = request.form.get("bottomless_cup", default=0, type=int) # ない場合None
+    print("takeout: {}".format(takeout))
+    print("deliverly: {}".format(deliverly))
+    print()
+    # 駐車場
+    parking    = request.form.get("bottomless_cup", default=0, type=int) # ない場合None
+    print("parking: {}".format(parking))
+    print()
+    # 検索範囲
+    search_radius_idx    = request.form.get("search_radius_idx", default=0, type=int) # ない場合None
+    print("search_radius_idx: {}".format(search_radius_idx))
+    print()
+    # 支払い方法
+    e_money    = request.form.get("bottomless_cup", default=0, type=int) # ない場合None
+    card    = request.form.get("bottomless_cup", default=0, type=int) # ない場合None
+    print("e_money: {}".format(e_money))
+    print("card: {}".format(card))
+    print("#########################")
+
     return render_template("filtering.html")
 
 @app.route("/test1/<string:username>")
@@ -68,15 +113,12 @@ def gnavi_detail(id):
     rest = db.session.query(Restaurant).filter(Restaurant.id == id).first()
     return render_template("detailed_page.html", rest=rest)
     
+
 @app.route("/", methods=["POST", "GET"])
 @app.route("/gnavi", methods=["POST", "GET"])
 def gnavi():
+    # ぐるなびAPIのURL
     api_url = "https://api.gnavi.co.jp/RestSearchAPI/v3"
-
-    # delete all rows in Restaurant
-    # num_rows_deleted = db.session.query(Restaurant).delete()
-    # db.session.commit()
-    # print("num rows deleted : {}".format(num_rows_deleted))
 
     if request.method == "GET":
         return render_template("filtering.html", title="gnavi")
@@ -91,13 +133,15 @@ def gnavi():
         db.session.commit()
         print("num rows deleted : {}".format(num_rows_deleted))
 
+        # 検索条件の取得
+
         # Set parameters
         params = {}
         params["keyid"] = api_key
         params["freeword"] = "居酒屋"
-        # params["hit_per_page"] = 100
         params["hit_per_page"] = 100
 
+        # 現在位置の指定
         # if session.get("lat") is not None and session.get("lng") is not None:
         #     params["latitude"] = round(session["lat"], 6)
         #     params["longitude"] = round(session["lat"], 6)
@@ -112,16 +156,15 @@ def gnavi():
         if res.get("error"):
             err_msg = res["error"][0]["message"]
             err_code = res["error"][0]["code"]
-            # return err_msg, err_code
             return err_msg, err_code
 
-        # Searched num
+        # レスポンス中のレストランの数
         cnt = len(res["rest"])
 
-        # Add restaurants to database
+        # レストランを
         restaurants = []
+        longest_pr_length = 0
         for i in range(cnt):
-            if len(res["rest"][i]["opentime"]) < 60: continue
 
             # access
             line = res["rest"][i]["access"]["line"]
@@ -141,7 +184,8 @@ def gnavi():
                         opening_hours = res["rest"][i]["opentime"],
                         budget = res["rest"][i]["budget"],
                         access = access,
-                        holiday = res["rest"][i]["holiday"]
+                        holiday = res["rest"][i]["holiday"],
+                        pr_long = res["rest"][i]["pr"]["pr_long"]
                    )
 
             restaurants.append(rest)

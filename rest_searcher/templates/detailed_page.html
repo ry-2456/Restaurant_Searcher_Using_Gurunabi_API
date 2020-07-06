@@ -39,7 +39,8 @@
   <div class="wrapper">
     <div class="detailed_page">
 
-      <div class="d-top">
+      <!-- 詳細TOP -->
+      <div class="d-top clearfix">
         <div class="d-top-left">
           <div class="rest-name">
             <h1>{{ rest.name }}</h1>
@@ -51,16 +52,19 @@
             </ul>
           </div>
         </div>
-        <div class="d-top-left">
+        <div class="d-top-right">
           <ul>
             <a href=#>クーポン</a>
-            <p>070-4165-5923</p> 
+            <p><img src="{{ url_for('static', filename='img/tel.svg') }}">070-4165-5923</p> 
           </ul>
         </div>
       </div>
-
-      <div class="d-pr">
+      
+      <!-- お店PR -->
+      <div class="d-pr clearfix">
         <div class="rest-imgs">
+
+          <!-- メインの画像 -->
           <div class="main-img">
             {% if rest.img_url1 %}
               <img src="{{ rest.img_url1 }}" />
@@ -68,13 +72,28 @@
               <img src="{{ rest.img_url2 }}" />
             {% endif %}
           </div>
-          <div class="sub-img">
-          </div>
+
+          <!-- サブの画像 -->
+          {% if rest.img_url1 and rest.img_url2 %}
+            <div class="sub-img clearfix">
+              <div class="sub-img1">
+                <img src="{{ rest.img_url1 }}" />
+              </div>
+              <div class="sub-img2">
+                <img src="{{ rest.img_url2 }}" />
+              </div>
+            </div>
+          {% endif %}
         </div>
         <div class="pr">
+            <dl>
+              <dt>お店のPR</dt> 
+              <dd><p>{{ rest.pr_long }}</p></dd>
+            </dl>
         </div>
       </div>
 
+      <!-- アクセス -->
       <div class="d-access clearfix">
         <div id="map-canvas">
         </div>
@@ -92,27 +111,28 @@
         </div>
       </div>
 
+      <!-- 更に細かい情報 -->
       <div class="d-all-info">
         <table>
           <tr>
             <th>店名</th>
-            <td></td>
+            <td>{{ rest.name }}</td>
           </tr>
           <tr>
             <th>営業時間</th>
-            <td></td>
+            <td>{{ rest.opening_hours }}</td>
           </tr>
           <tr>
             <th>電話番号</th>
-            <td></td>
+            <td>{{ rest.tel }}</td>
           </tr>
           <tr>
             <th>住所</th>
-            <td></td>
+            <td>{{ rest.address }}</td>
           </tr>
           <tr>
             <th>アクセス</th>
-            <td></td>
+            <td>{{ rest.access }}</td>
           </tr>
           <tr>
             <th>駐車場</th>
@@ -143,7 +163,7 @@
     </div>
   </div>
   <!-- google map apiの読み込み -->
-  {#<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQM4ojhGRxj_N1rnbNCHSjIv062WXP3SU&language=ja"></script>
-  <script src="{{ url_for('static', filename='js/google-map.js') }}" type="text/javascript"></script>#}
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQM4ojhGRxj_N1rnbNCHSjIv062WXP3SU&language=ja"></script>
+  <script src="{{ url_for('static', filename='js/google-map.js') }}" type="text/javascript"></script>
 {% endblock %}
 
