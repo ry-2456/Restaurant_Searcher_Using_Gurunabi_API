@@ -1,4 +1,3 @@
-// Callback function executed when succeed in getting the current position.
 function successCallback(pos) {
   // let lat = pos.coords.latitude;  // 緯度
   // let lng = pos.coords.longitude; // 経度
@@ -49,23 +48,22 @@ function passCurrentPositionToFlask(options) {
     navigator.geolocation.getCurrentPosition(resolve, reject, options);
 })};
 
-
 // pass curent position to Flask
 passCurrentPositionToFlask(optionObj).then((position) => {
     let lat = position.coords.latitude;  // 緯度
     let lng = position.coords.longitude; // 経度
 
-    document.getElementById("geolocation-result").innerHTML = 
-      '<table>' + 
-      '<td>緯度</dt><dd>' + lat + '</dd>' + 
-      '<td>経度</dt><dd>' + lng + '</dd>' + 
-      '</table>';
+    //document.getElementById("geolocation-result").innerHTML = 
+    //  '<table>' + 
+    //  '<td>緯度</dt><dd>' + lat + '</dd>' + 
+    //  '<td>経度</dt><dd>' + lng + '</dd>' + 
+    //  '</table>';
 
-    alert(lat);
-    alert(lng);
-
+    // alert(lat);
+    // alert(lng);
     console.log(lat);
     console.log(lng);
+
     $.ajax({
       type: "POST",
       contentType: "application/json;charset=utf-8",
