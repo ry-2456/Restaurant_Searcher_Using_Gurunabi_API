@@ -181,9 +181,21 @@
 
 /**********すべての情報***********/
 .d-all-info {
-
-  min-height: 300px;
   border: solid 2px red;
+}
+.d-all-info table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.d-all-info th {
+  /*border: solid 1px red;*/
+  box-sizing: border-box;
+  width: 25%;
+}
+
+.d-all-info th, .d-all-info td {
+  border-bottom: solid 1px #dddddd;
+  height: 40px;
 }
 /*********************************/
 

@@ -114,7 +114,7 @@ def gnavi():
         db.session.commit()
         print("num rows deleted : {}".format(num_rows_deleted))
 
-        # 検索条件の取得
+        ######################### 検索条件の取得 ###################################
         # キーワード
         freeword = (request.form.get("freeword", default='', type=str)).strip() # ない場合None
         freeword = ','.join(freeword.split()) # 空白文字で区切りカンマで結合
@@ -182,8 +182,8 @@ def gnavi():
         restaurants = []
         longest_pr_length = 0
         for i in range(cnt):
-
-            # access
+            if len(res["rest"][i]["opentime"]) < 60: continue
+            # アクセス
             line = res["rest"][i]["access"]["line"]
             station = res["rest"][i]["access"]["station"]
             station_exit = res["rest"][i]["access"]["station_exit"]
@@ -199,13 +199,30 @@ def gnavi():
                         address = res["rest"][i]["address"],
                         tel = res["rest"][i]["tel"],
                         opening_hours = res["rest"][i]["opentime"],
-                        budget = res["rest"][i]["budget"],
                         access = access,
                         holiday = res["rest"][i]["holiday"],
-                        pr_long = res["rest"][i]["pr"]["pr_long"]
+                        pr_long = res["rest"][i]["pr"]["pr_long"],
+
+                        budget = str(res["rest"][i]["budget"]),
+                        party = str(res["rest"][i]["party"]),
+                        lunch = str(res["rest"][i]["lunch"]),
+
+                        parking_lots = str(res["rest"][i]["parking_lots"]),
+
+                        credit_card = res["rest"][i]["credit_card"],
+                        e_money = res["rest"][i]["e_money"],
+
+                        coupon_pc_url = res["rest"][i]["coupon_url"]["pc"],
+                        coupon_mobile_url = res["rest"][i]["coupon_url"]["mobile"],
                    )
 
             restaurants.append(rest)
+            print("############################")
+            print("budget: ", res["rest"][i]["budget"])
+            print("party: ", res["rest"][i]["party"])
+            print("lunch: ", res["rest"][i]["lunch"]) 
+            print(type(res["rest"][i]["lunch"]))
+            print("############################")
 
         # add_restaurat_to_db(restaurant)
         db.session.add_all(restaurants)  

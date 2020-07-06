@@ -119,14 +119,6 @@
             <td>{{ rest.name }}</td>
           </tr>
           <tr>
-            <th>営業時間</th>
-            <td>{{ rest.opening_hours }}</td>
-          </tr>
-          <tr>
-            <th>電話番号</th>
-            <td>{{ rest.tel }}</td>
-          </tr>
-          <tr>
             <th>住所</th>
             <td>{{ rest.address }}</td>
           </tr>
@@ -135,24 +127,61 @@
             <td>{{ rest.access }}</td>
           </tr>
           <tr>
+            <th>電話番号</th>
+            <td>{{ rest.tel }}</td>
+          </tr>
+          <tr>
+            <th>営業時間</th>
+            <td>{{ rest.opening_hours }}</td>
+          </tr>
+          <tr>
+            <th>定休日</th>
+            <td>{{ rest.holiday }}</td>
+          </tr>
+          <tr>
             <th>駐車場</th>
-            <td></td>
+            <td>
+              {% if rest.parking_lots %}
+                {{ rest.parking_lots }}台
+              {% else %}
+                なし
+              {% endif %} 
+            </td>
           </tr>
           <tr>
             <th>平均予算</th>
-            <td></td>
+            <td>
+              {#{% if rest.budget %}
+                平均{{ rest.budget }}円&nbsp
+              {% endif %}
+              #}
+              {% if rest.budget %}
+                宴会・パーティ{{ rest.budget }}円&nbsp&nbsp&nbsp
+              {% endif %}
+              {% if rest.budget %}
+                ランチ{{ rest.budget }}円&nbsp
+              {% endif %}
+            </td>
           </tr>
           <tr>
             <th>クレジットカード</th>
-            <td></td>
+            <td>
+              {% if rest.credit_card %}
+                {{ rest.credit_card }} 
+              {% else %}
+                利用不可
+              {% endif %} 
+            </td>
           </tr>
           <tr>
             <th>電子マネー</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th></th>
-            <td></td>
+            <td>
+              {% if rest.e_money %} 
+                {{ rest.e_money }}
+              {% else %}
+                利用不可
+              {% endif %}
+            </td>
           </tr>
           <tr>
             <th></th>
